@@ -1,0 +1,28 @@
+@use "sass:map";
+
+$white: hsl(#{var(--clr-white)});
+$black: hsl(#{var(--clr-black)});
+$grey: hsl(#{var(--clr-grey)});
+$dark-grey: hsl(#{var(--clr-dark-grey)});
+$light-grey: hsl(#{var(--clr-light-grey)});
+$prime: hsl(#{var(--clr-prime)});
+$second: hsl(#{var(--clr-second)});
+$dark-yellow: hsl(#{var(--clr-dark-yellow)});
+$light-yellow: hsl(#{var(--clr-light-yellow)});
+$dark-brown: hsl(#{var(--clr-dark-brown)});
+
+// font sizes
+$font-size: 1rem;
+$font-size-sm: $font-size * 0.75;
+$font-size-md: $font-size * 0.875;
+$font-size-lg: $font-size * 1.125;
+$font-size-xl: $font-size * 1.25;
+
+// font weights
+$font-weight-light: 300;
+
+// media queries
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;

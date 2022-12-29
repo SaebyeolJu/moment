@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "Gowun Dodum", sans-serif;
+  src: url("../assets/font/GowunDodum-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Raleway", sans-serif;
+  src: url("../assets/font/Raleway/Raleway-Medium.ttf") format("truetype");
+}
+
+// font
+// $font-family: "Roboto", sans-serif;
+$font-prime: "Gowun Dodum", sans-serif;
+$font-second: "Noto Sans KR", sans-serif;
+
+a,
+a:visited,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+.italic {
+  font-style: italic;
+}
+
+* {
+  font-family: $font-prime;
+}
