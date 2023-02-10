@@ -1,39 +1,25 @@
-import "./styles/_main.scss";
 import { Route, Routes } from "react-router-dom";
 
-import Landing from "./pages/SignUp";
+import Landing from "./pages/Landing";
 import Collection from "./pages/Collection";
-import MyInfo from "./pages/MyInfo";
+import Info from "./pages/Info";
 import NotFound from "./pages/NotFound";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
+import Contact from "./pages/Contact";
 
-function App() {
+export function App() {
   return (
     <Routes>
-      <Route element="/">
-        <Landing />
-      </Route>
-
-      <Route element="/login">
-        <Login />
-      </Route>
-
-      <Route element="/collection/:id">
-        <Collection />
-      </Route>
-
-      <Route element="/myInfo">
-        <MyInfo />
-      </Route>
-
-      <Route element="/signUp">
-        <SignUp />
-      </Route>
-
-      <Route element="*">
-        <NotFound />
-      </Route>
+      <Route path="/" element={<Landing />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/collection" element={<Collection />} />
+      <Route path="/info" element={<Info />} />
+      {/* <Route path="/collection/:id" element={<Collection />} /> */}
+      {/* <Route path="/info/:id" element={<MyInfo />} /> */}
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
