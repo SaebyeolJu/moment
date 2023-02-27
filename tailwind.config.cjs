@@ -8,21 +8,33 @@ module.exports = {
     "./src/functions/*.tsx",
   ],
   theme: {
-    screens: {
-      sm: "480px",
-      md: "768px",
-      lg: "1024px",
-      xl: "1280px",
-    },
-
-    fontFamily: {
-      sans: ["Roboto", "sans-serif"],
-      serif: ["Roboto Slab", "serif"],
-    },
-
     extend: {
+      screens: {
+        sm: "480px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+      },
+
+      inset: {
+        "1/5": "20%",
+        "1/6": "16.666667%",
+        "1/7": "14.285714%",
+      },
+
+      fontFamily: {
+        sans: ["Roboto", "sans-serif"],
+        serif: ["Roboto Slab", "serif"],
+      },
+      dropShadow: {
+        "3xl": "0 35px 35px rgba(0, 0, 0, 0.25)",
+        "4xl": [
+          "0 35px 35px rgba(0, 0, 0, 0.25)",
+          "0 45px 65px rgba(0, 0, 0, 0.15)",
+        ],
+      },
       colors: {
-        white: "#EAEDDF",
+        ivory: "#EAEDDF",
         "light-gray": "#E5E5E5",
         gray: "#ACB3BF",
         black: "#1E1E1E",
@@ -35,6 +47,7 @@ module.exports = {
         "dark-green": "#335342",
         "dark-purple": "#081A51",
         "light-white": "rgba(255,255,255,0.18)",
+        "dark-indigo": "#050331",
       },
     },
   },
