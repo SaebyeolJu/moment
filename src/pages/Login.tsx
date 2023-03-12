@@ -15,6 +15,10 @@ const Login: React.FC = () => {
     password: "",
   });
 
+  const google = () => {
+    window.open("http://localhost:5000/auth/google", "_self");
+  };
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
 
@@ -35,11 +39,15 @@ const Login: React.FC = () => {
   }
 
   return (
-    <section className="bg-gray-50 min-h-screen flex items-center justify-center">
+    <section className="dark:bg-slate-900 bg-yellow-500 min-h-screen flex items-center justify-center">
       {/* <!-- login container --> */}
-      <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
+      {/* <!-- image --> */}
+      <div className="md:block hidden">
+        <img className="rounded-2xl" src="./img/bg/card.png" />
+      </div>
+      <div className="bg-slate-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
         {/* <!-- form --> */}
-        <div className="md:w-1/2 px-8 md:px-16">
+        <div className="w-full md:w-auto px-8 md:px-16">
           <h2 className="font-bold text-2xl text-[#002D74]">Login</h2>
           <p className="text-xs mt-4 text-[#002D74]">
             If you are already a member, easily log in
@@ -99,7 +107,10 @@ const Login: React.FC = () => {
           </div>
 
           {/* google login button */}
-          <button className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]">
+          <button
+            className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]"
+            onClick={google}
+          >
             <svg
               className="mr-3"
               xmlns="http://www.w3.org/2000/svg"
@@ -137,20 +148,12 @@ const Login: React.FC = () => {
             <p>아직 회원이 아니신가요?</p>
             <button
               onClick={() => navigate("/signup")}
-              className="py-2 px-5 flex justify-evenly text-center bg-white border rounded-xl hover:scale-110 duration-300"
+              className="py-2 px-5 ml-2 flex justify-evenly text-center bg-white border rounded-xl hover:scale-110 duration-300"
             >
               {/* Register */}
               가입하기 🙌
             </button>
           </div>
-        </div>
-
-        {/* <!-- image --> */}
-        <div className="md:block hidden w-1/2">
-          <img
-            className="rounded-2xl"
-            src="https://images.unsplash.com/photo-1616606103915-dea7be788566?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
-          />
         </div>
       </div>
     </section>

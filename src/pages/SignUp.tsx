@@ -7,24 +7,32 @@ interface SignUpProps {
   email: string;
   password: string;
   passwordConfirm: string;
+  agreedTerms: boolean;
 }
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const text = `사용약관`;
 
   const [signUpState, setSignUpState] = React.useState<SignUpProps>({
     email: "",
     password: "",
     passwordConfirm: "",
+    agreedTerms: false,
   });
+
+  function handleAgreedTerms(e: React.ChangeEvent<HTMLInputElement>): void {
+    setSignUpState({ ...signUpState, agreedTerms: e.target.checked });
+  }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     if (
       signUpState.email === "" ||
       signUpState.password === "" ||
-      signUpState.passwordConfirm === ""
+      signUpState.passwordConfirm === "" ||
+      !signUpState.agreedTerms
     ) {
-      alert("이메일과 비밀번호를 입력해주세요.");
+      alert("이메일과 비밀번호를 입력하고 약관에 동의해주세요.");
       return;
     }
 
@@ -43,18 +51,24 @@ const SignUp = () => {
       return;
     }
 
+    // 위 코드에서는 signUpState.agreedTerms가 boolean인지 먼저 확인하고, boolean 값으로 평가될 경우에만 비교 연산을 수행합니다.
+    if (
+      typeof signUpState.agreedTerms === "boolean" &&
+      !signUpState.agreedTerms
+    ) {
+      alert("약관에 동의해주세요.");
+      return;
+    }
+
     event.preventDefault();
   }
 
   return (
-    <section className="bg-gray-50 min-h-screen flex items-center justify-center">
+    <section className="dark:bg-slate-900 bg-yellow-500 bg-gray-50 min-h-screen flex items-center justify-center">
       {/* <!-- login container --> */}
-      <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
+      <div className="bg-slate-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
         <div className="md:block hidden w-1/2">
-          <img
-            className="rounded-2xl"
-            src="https://images.unsplash.com/photo-1616606103915-dea7be788566?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
-          />
+          <img className="rounded-2xl" src="./img/bg/card.png" />
         </div>
 
         {/* <!-- form --> */}
@@ -105,11 +119,39 @@ const SignUp = () => {
               />
               <BsLock className="bi bi-eye absolute top-1/2 right-3 -translate-y-1/2" />
             </div>
+
+            {/* 사용자 약관 */}
+            <div className="flex flex-col items-center justify-center">
+              <textarea
+                className="p-2 border rounded-md resize-none w-full h-60 max-h-60 overflow-y-auto"
+                value={text}
+                readOnly
+              />
+
+              <div>
+                <input
+                  type="checkbox"
+                  id="agree"
+                  name="agree"
+                  checked={signUpState.agreedTerms}
+                  onChange={(e) =>
+                    setSignUpState({
+                      ...signUpState,
+                      agreedTerms: e.target.checked,
+                    })
+                  }
+                />
+                <label htmlFor="agree" className="ml-2">
+                  [필수] 이용약관 및 개인정보 처리 방침 동의
+                </label>
+              </div>
+            </div>
+
             <button
               type="submit"
               className="bg-[#002D74] rounded-xl text-white py-2 hover:scale-105 duration-300"
             >
-              로그인
+              회원가입
               {/* Login */}
             </button>
           </form>
