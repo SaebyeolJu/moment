@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { CgProfile } from "react-icons/cg";
@@ -8,6 +8,9 @@ import { FiLogOut } from "react-icons/fi";
 import { GiNightSleep } from "react-icons/gi";
 import { MdDoubleArrow } from "react-icons/md";
 
+import { AuthContext } from "../context/AuthContext";
+import { handleLogout } from "../utils/handleLogout";
+
 interface Props {
   isOpen: boolean;
   handleIsOpen: (state: boolean) => void;
@@ -15,6 +18,7 @@ interface Props {
 
 const Navbar: React.FC<Props> = ({ isOpen, handleIsOpen }) => {
   const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
 
   const Menus = [
     {
@@ -36,6 +40,7 @@ const Navbar: React.FC<Props> = ({ isOpen, handleIsOpen }) => {
       title: "logout ",
       dest: "/",
       icon: <FiLogOut className="absolute w-7 h-7 min-w-min mx-6" />,
+      onClick: () => handleLogout(dispatch),
     },
     {
       title: "Setting ",

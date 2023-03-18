@@ -1,33 +1,37 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { validateEmail, validatePassword } from "../functions/validation";
+import axios from "axios";
+
+import { AuthContext } from "../context/AuthContext";
+import { validateEmail, validatePassword } from "../utils/validation";
 
 interface LoginProps {
-  email: string;
+  emailAddress: string;
   password: string;
 }
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
 
-  const [loginState, setLoginState] = React.useState<LoginProps>({
-    email: "",
+  const [loginState, setLoginState] = useState<LoginProps>({
+    emailAddress: "",
     password: "",
   });
 
-  const google = () => {
+  const handleGoogleLogin = () => {
     window.open("http://localhost:5000/auth/google", "_self");
   };
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (loginState.email === "" || loginState.password === "") {
+    if (loginState.emailAddress === "" || loginState.password === "") {
       alert("이메일과 비밀번호를 입력해주세요.");
       return;
     }
 
-    if (!validateEmail(loginState.email)) {
+    if (!validateEmail(loginState.emailAddress)) {
       alert("이메일 형식이 올바르지 않습니다.");
       return;
     }
@@ -36,7 +40,47 @@ const Login: React.FC = () => {
       alert("비밀번호는 소문자, 대문자, 숫자가 포함된 8자 이상이어야 합니다.");
       return;
     }
-  }
+
+    try {
+      const user = {
+        email: loginState.emailAddress,
+        password: loginState.password,
+      };
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const response = await axios.post(
+        "http://localhost:5000/api/auth//login",
+        user,
+        config
+      );
+
+      if (response.data.success) {
+        // 인증 상태를 업데이트하는 'LOGIN' 액션을 디스패치합니다.
+        dispatch({
+          type: "LOGIN",
+          payload: {
+            token: response.data.token,
+            user: {
+              email: loginState.emailAddress,
+              // 필요한 경우 다른 사용자 정보를 추가합니다.
+            },
+          },
+        });
+        alert("로그인 성공");
+        navigate("/dashboard");
+      } else {
+        alert("로그인 실패");
+      }
+    } catch (error) {
+      alert("로그인 실패");
+      console.error(error);
+    }
+  };
 
   return (
     <section className="dark:bg-slate-900 bg-yellow-500 min-h-screen flex items-center justify-center">
@@ -63,9 +107,9 @@ const Login: React.FC = () => {
               type="email"
               name="email"
               placeholder="Email"
-              value={loginState.email}
+              value={loginState.emailAddress}
               onChange={(e) =>
-                setLoginState({ ...loginState, email: e.target.value })
+                setLoginState({ ...loginState, emailAddress: e.target.value })
               }
             />
             <div className="relative">
@@ -96,7 +140,6 @@ const Login: React.FC = () => {
               className="bg-[#002D74] rounded-xl text-white py-2 hover:scale-105 duration-300"
             >
               로그인
-              {/* Login */}
             </button>
           </form>
 
@@ -109,7 +152,7 @@ const Login: React.FC = () => {
           {/* google login button */}
           <button
             className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]"
-            onClick={google}
+            onClick={handleGoogleLogin}
           >
             <svg
               className="mr-3"

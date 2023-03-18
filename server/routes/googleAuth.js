@@ -29,13 +29,14 @@ router.get(
 
 router.get("/logout", (req, res) => {
   req.logout();
-  res.redirect(process.env.CLIENT_URL);
+  res.redirect("/");
 });
 
+// successRedirect: 다시 확인해야함
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "http://localhost:5173/",
+    successRedirect: "/",
     failureRedirect: "/login",
   })
 );

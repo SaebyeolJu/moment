@@ -12,6 +12,8 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: `/auth/google/callback`,
     },
+
+    // OAuth 인증에서는 JWT대신, Access Token과 Refresh Token이 사용. Access Token은 사용자를 인증하고 권한 부여에 사용되며, Refresh Token은 Access Token의 만료 시간이 지난 경우 새로운 Access Token을 발급하는 데 사용
     async (accessToken, refreshToken, profile, done) => {
       try {
         const user = await User.findOne({ googleId: profile.id });
