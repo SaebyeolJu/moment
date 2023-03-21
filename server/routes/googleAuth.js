@@ -9,7 +9,12 @@ router.get("/login/success", (req, res) => {
       success: true,
       message: "user has successfully authenticated",
       user: req.user,
-      cookies: req.cookies,
+      token: req.user.accessToken,
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "user has not been authenticated",
     });
   }
 });
@@ -32,12 +37,11 @@ router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-// successRedirect: 다시 확인해야함
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "/",
-    failureRedirect: "/login",
+    successRedirect: `${process.env.CLIENT_URL}/dashboard`,
+    failureRedirect: `${process.env.CLIENT_URL}/login`,
   })
 );
 

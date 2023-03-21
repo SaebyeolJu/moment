@@ -20,15 +20,15 @@ passport.use(
 
         // 이미 가입되어 있는 사용자인지 확인
         if (user) {
-          done(null, user);
+          user.accessToken = accessToken;
+          done(null, user, accessToken);
         } else {
           const newUser = new User({
             googleId: profile.id,
-            name: profile.displayName,
             email: profile.emails[0].value,
           });
           await newUser.save();
-          done(null, newUser);
+          done(null, newUser, accessToken);
         }
       } catch (error) {
         console.log(error);

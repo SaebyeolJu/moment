@@ -1,14 +1,6 @@
 // src/context/AuthContext.ts
 import { createContext, useReducer, Dispatch } from "react";
 
-/**
- * @description AuthContext를 사용하기 위한 타입 정의 및 초기 상태 정의
- * @type {AuthState} - AuthContext의 상태 타입
- * @type {AuthAction} - AuthContext의 액션 타입
- * @type {initialState} - AuthContext의 초기 상태
- * @type {AuthContext} - AuthContext의 타입
- * @type {authReducer} - AuthContext의 리듀서
- */
 interface AuthState {
   isLoggedIn: boolean;
   token: string | null;
