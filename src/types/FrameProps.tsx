@@ -2,15 +2,22 @@ export interface FrameProps {
   frame: {
     id: string;
     name: string;
-    medal_img: string;
-    cover_img: string;
     title: string;
-    event_disc: string;
-    event_date: string;
-    frame_img: string;
-    likes: string;
-    comments: string;
+    medalImg: string;
+    coverImg: Array<string>;
+    caption: string;
+    date: string | Date;
+    location: string;
+    frameType: number;
+    likes: number;
+    comments: number;
     tags: Array<string>;
   };
   isClicked: boolean;
+}
+
+export interface FrameInputProps {
+  onSubmit: (frameInfo: FrameProps) => void;
+  onPrevStep: () => void;
+  onNextStep: () => void;
 }
