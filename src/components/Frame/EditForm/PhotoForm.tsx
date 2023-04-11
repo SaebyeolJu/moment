@@ -1,11 +1,12 @@
 import React, { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
+import { Player } from "@lottiefiles/react-lottie-player";
 import { VscTriangleUp, VscTriangleDown } from "react-icons/vsc";
 import { FaStar } from "react-icons/fa";
 import { RiDeleteBin5Line } from "react-icons/ri";
 
-import { FrameProps, FrameInputProps } from "../../types/FrameProps";
+import { FrameInputProps } from "../../../types/FrameProps";
 
 const PhotoForm: React.FC<FrameInputProps> = ({
   onSubmit,
@@ -17,23 +18,6 @@ const PhotoForm: React.FC<FrameInputProps> = ({
     preview: string;
   }> | null>(null);
   const [coverIndex, setCoverIndex] = useState<number | null>(null);
-  const [frameInfo, setFrameInfo] = useState<FrameProps>({
-    frame: {
-      id: "",
-      name: "",
-      medalImg: "",
-      coverImg: [],
-      title: "",
-      caption: "",
-      date: new Date(),
-      location: "",
-      frameType: 0,
-      likes: 0,
-      comments: 0,
-      tags: [],
-    },
-    isClicked: false,
-  });
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const newPhotos = acceptedFiles.map((file) => ({
@@ -119,32 +103,34 @@ const PhotoForm: React.FC<FrameInputProps> = ({
       return;
     }
 
-    setFrameInfo((prevFrameInfo) => ({
-      ...prevFrameInfo,
-      frame: {
-        ...prevFrameInfo.frame,
-        coverImg: uploadedPhotos?.map((photo) => photo.preview) || [],
-      },
-    }));
-
+    onSubmit({
+      imageUrl: uploadedPhotos?.map((photo) => photo.preview) || [],
+    });
     onNextStep();
   };
 
   return (
     <form
-      className="flex flex-col justify-center text-center items-center space-y-6"
+      className="h-full flex flex-col justify-center text-center space-y-6"
       onSubmit={handleSubmit}
     >
       <h2 className="text-2xl font-bold break-keep text-center">
-        기억하고 싶은 순간을 기록하세요
+        기억하고 싶은 순간을 골라주세요
       </h2>
       <div className="my-auto">
         {!uploadedPhotos && (
           <div
             {...getRootProps()}
-            className="relative flex flex-col justify-around items-center border-2 border-dashed border-gray-400 rounded-lg p-4 w-64 h-56"
+            className="flex flex-col justify-center items-center border-2 border-dashed border-gray-400 rounded-lg p-6 h-auto"
           >
             <input {...getInputProps({ hidden: true })} />
+            <Player
+              src="https://assets5.lottiefiles.com/packages/lf20_NxAJBy.json"
+              background="transparent"
+              style={{ height: "300px", width: "300px" }}
+              autoplay={true}
+              loop={true}
+            ></Player>
             {isDragActive ? (
               <p className="break-keep">이미지를 drag 해주세요.</p>
             ) : (
@@ -170,6 +156,7 @@ const PhotoForm: React.FC<FrameInputProps> = ({
                   className="h-16 w-16 object-cover rounded-md cursor-pointer"
                   onClick={() => setCoverPhoto(index)}
                 />
+
                 <div className="flex space-x-3">
                   <button
                     onClick={() => moveUp(index)}

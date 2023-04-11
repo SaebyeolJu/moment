@@ -1,10 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { GrGallery } from "react-icons/gr";
-import { AiOutlineComment } from "react-icons/ai";
-import { FaShare } from "react-icons/fa";
-
-import { FrameProps } from "../types/FrameProps";
+import { FrameProps } from "../../types/FrameProps";
 
 import FrameTooltip from "./FrameTooltip";
 import FrameIconBox from "./FrameIconBox";
@@ -12,6 +8,7 @@ import FrameIconBox from "./FrameIconBox";
 const Frame: React.FC<FrameProps> = ({ frame }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const handleClick = () => {
     setIsClicked(!isClicked);
@@ -25,11 +22,28 @@ const Frame: React.FC<FrameProps> = ({ frame }) => {
     setIsHovered(false);
   };
 
+  const handleDelete = () => {
+    setIsDeleted(true);
+  };
+
+  useEffect(() => {
+    if (!isClicked || isHovered) return;
+
+    const timer = setTimeout(() => {
+      setIsClicked(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [isClicked, isHovered]);
+
   return (
-    <article className="group flex flex-col items-center snap-center">
+    <article
+      className={`group dark:text-black flex flex-col items-center snap-center duration-300 ease-out ${
+        isDeleted ? "opacity-0 scale-0" : "opacity-100 scale-100"
+      }`}
+    >
       <FrameTooltip
-        likes={frame.likes}
-        comments={frame.comments}
+        likes={frame.likes.totalLikes}
+        comments={frame.comments.totalComments}
         isClicked={isClicked}
         isHovered={isHovered}
       />
@@ -37,7 +51,9 @@ const Frame: React.FC<FrameProps> = ({ frame }) => {
         className={`frame--outline hover:scale-110 hover:-translate-y-1 w-64 md:w-72 flex flex-col justify-center text-center items-center align-middle overflow-hidden p-8 m-8 cursor-pointer transition-all duration-400
       ${isClicked ? "drop-shadow-xl" : "drop-shadow-2xl"}
       `}
-        style={{ backgroundImage: `url(${frame.frame_img})` }}
+        style={{
+          backgroundImage: `url(./img/frames/frame_${frame.frameType + 1}.svg)`,
+        }}
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -45,8 +61,8 @@ const Frame: React.FC<FrameProps> = ({ frame }) => {
         <div className="frame--img flex shadow-inner bg-slate-200 w-full p-6 border-t-8 border-l-4 border-1 border-slate-400/80">
           <div className="frame--content flex flex-col justify-center items-center p-3 drop-shadow-md bg-white">
             <img
-              src={frame.medal_img}
-              alt={frame.medal_img}
+              src={frame.medalUrl}
+              alt={frame.medalUrl}
               className={`frame-medal w-full m-2 mb-6 drop-shadow-xl transition-all duration-1000`}
             />
             <h1
@@ -66,7 +82,6 @@ const Frame: React.FC<FrameProps> = ({ frame }) => {
               >
                 {frame.title}
               </h1>
-              <p className="frame--disc text-sm">{frame.event_date}</p>
             </div>
 
             <svg
@@ -87,7 +102,7 @@ const Frame: React.FC<FrameProps> = ({ frame }) => {
           </div>
         </div>
       </div>
-      <FrameIconBox isClicked={isClicked} />
+      <FrameIconBox isClicked={isClicked} onDelete={handleDelete} />
     </article>
   );
 };

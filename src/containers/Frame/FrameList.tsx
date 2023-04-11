@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import FrameInfo from "../assets/data/FrameInfo.json";
-import Frame from "../components/Frame";
+import FrameInfo from "../../assets/data/FrameInfo.json";
+import Frame from "../../components/Frame/Frame";
 
 // 사용자가 선택한 frame 종류에 따라서 svg 파일을 다르게 가져온다.
 

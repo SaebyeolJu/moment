@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
+import { Tooltip } from "react-tooltip";
 
+import { Player } from "@lottiefiles/react-lottie-player";
 import { TbEraser, TbEraserOff } from "react-icons/tb";
 import { FiRefreshCw } from "react-icons/fi";
 import { BiImageAdd } from "react-icons/bi";
 
-import { FrameProps, FrameInputProps } from "../../types/FrameProps";
-import useRemoveTransparentHook from "../../utils/useRemoveTransparentHook";
+import { FrameInputProps } from "../../../types/FrameProps";
+import useRemoveTransparentHook from "../../../utils/useRemoveTransparentHook";
+import "react-tooltip/dist/react-tooltip.css";
 
 const ImageEditor: React.FC<FrameInputProps> = ({
   onSubmit,
@@ -19,23 +22,6 @@ const ImageEditor: React.FC<FrameInputProps> = ({
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
-  });
-  const [frameInfo, setFrameInfo] = useState<FrameProps>({
-    frame: {
-      id: "",
-      name: "",
-      medalImg: "",
-      coverImg: [],
-      title: "",
-      caption: "",
-      date: new Date(),
-      location: "",
-      frameType: 0,
-      likes: 0,
-      comments: 0,
-      tags: [],
-    },
-    isClicked: false,
   });
 
   const onDrop = (acceptedFiles: File[]) => {
@@ -163,15 +149,7 @@ const ImageEditor: React.FC<FrameInputProps> = ({
     const dataUrl = canvas.toDataURL("image/png");
     const editedImage = dataUrl.replace(/^data:image\/(png|jpg);base64,/, "");
 
-    setFrameInfo((prevFrameInfo) => ({
-      ...prevFrameInfo,
-      frame: {
-        ...prevFrameInfo.frame,
-        medalImg: editedImage || "",
-      },
-    }));
-
-    onSubmit(frameInfo);
+    onSubmit({ medalUrl: editedImage });
     onNextStep();
   };
 
@@ -182,11 +160,13 @@ const ImageEditor: React.FC<FrameInputProps> = ({
       className="h-full flex flex-col justify-center text-center space-y-6"
       onSubmit={handleSubmit}
     >
-      <h2 className="text-2xl font-bold text-gray-700">
-        기억하고 싶은 순간을 선택해주세요
+      <h2 className="text-2xl font-bold text-gray-700 break-keep">
+        영광의 메달을 올려주세요!
       </h2>
       {image && (
-        <p className="text-gray-600">메달의 배경은 터치해서 지워주세요!</p>
+        <p className="text-gray-600 break-keep">
+          메달의 배경은 터치해서 지워주세요!
+        </p>
       )}
       <div
         {...getRootProps()}
@@ -196,11 +176,29 @@ const ImageEditor: React.FC<FrameInputProps> = ({
       >
         <input {...getInputProps()} />
         {isDragActive ? (
-          <p className="text-gray-600">이미지를 드래그 해주세요.</p>
+          <>
+            <Player
+              src="https://assets5.lottiefiles.com/packages/lf20_NxAJBy.json"
+              background="transparent"
+              style={{ height: "300px", width: "300px" }}
+              autoplay={true}
+              loop={true}
+            ></Player>
+            <p className="text-gray-600">이미지를 드래그 해주세요.</p>
+          </>
         ) : (
-          <p className="text-gray-600">
-            이미지를 드래그하거나 클릭해서 이미지를 선택해주세요.
-          </p>
+          <>
+            <Player
+              src="https://assets7.lottiefiles.com/packages/lf20_SC3bWlmCAz.json"
+              background="transparent"
+              style={{ height: "300px", width: "300px" }}
+              autoplay={true}
+              loop={true}
+            ></Player>
+            <p className="text-gray-600">
+              이미지를 드래그하거나 클릭해서 이미지를 선택해주세요.
+            </p>
+          </>
         )}
       </div>
       <canvas
@@ -214,25 +212,37 @@ const ImageEditor: React.FC<FrameInputProps> = ({
 
       {image && (
         <>
-          <div className="flex justify-center space-x-4">
+          <div className="flex justify-center">
             <button
-              className="btn-edit p-2 bg-gray-200 hover:bg-gray-300 rounded-full transition-all"
+              className="btn-edit bg-gray-200 hover:bg-gray-300 rounded-full"
               onClick={handleEditClick}
+              data-tooltip-id="edit-tooltip"
+              data-tooltip-content={`${
+                isEditing ? "수정 시작" : "수정 멈추기"
+              }`}
+              data-tooltip-place="bottom"
             >
               {isEditing ? <TbEraser /> : <TbEraserOff />}
             </button>
             <button
-              className="btn-edit p-2 bg-gray-200 hover:bg-gray-300 rounded-full"
+              className="btn-edit bg-gray-200 hover:bg-gray-300 rounded-full"
               onClick={handleImageResetClick}
+              data-tooltip-id="edit-tooltip"
+              data-tooltip-content="Image Edit Reset"
+              data-tooltip-place="bottom"
             >
               <FiRefreshCw />
             </button>
             <button
-              className="btn-edit p-2 bg-gray-200 hover:bg-gray-300 rounded-full"
+              className="btn-edit bg-gray-200 hover:bg-gray-300 rounded-full"
               onClick={handleResetClick}
+              data-tooltip-id="edit-tooltip"
+              data-tooltip-content="Image Reset"
+              data-tooltip-place="bottom"
             >
               <BiImageAdd />
             </button>
+            <Tooltip id="edit-tooltip" />
           </div>
         </>
       )}
@@ -240,17 +250,23 @@ const ImageEditor: React.FC<FrameInputProps> = ({
       <div className="flex justify-around">
         <button
           type="submit"
-          className="bg-blue-600 text-white rounded-lg py-2 px-6 mt-6 transition-all hover:bg-blue-700"
+          className={`${
+            image
+              ? " bg-slate-300 text-slate-800 hover:bg-slate-400"
+              : "bg-red-500 text-white hover:bg-red-600"
+          } rounded-lg px-4 py-2 mt-6 transition-colors duration-150`}
           onClick={() => onPrevStep()}
         >
           이전
         </button>
-        <button
-          type="submit"
-          className="bg-blue-600 text-white rounded-lg py-2 px-6 mt-6 transition-all hover:bg-blue-700"
-        >
-          다음
-        </button>
+        {image && (
+          <button
+            type="submit"
+            className="rounded-lg px-4 py-2 mt-6 bg-red-500 text-white hover:bg-red-600 transition-colors duration-150"
+          >
+            다음
+          </button>
+        )}
       </div>
     </form>
   );
