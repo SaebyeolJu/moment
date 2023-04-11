@@ -25,7 +25,8 @@ passport.use(
         } else {
           const newUser = new User({
             googleId: profile.id,
-            email: profile.emails[0].value,
+            userId: profile.emails[0].value,
+            username: profile.displayName,
           });
           await newUser.save();
           done(null, newUser, accessToken);

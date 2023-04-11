@@ -4,7 +4,9 @@ import { createContext, useReducer, Dispatch } from "react";
 interface AuthState {
   isLoggedIn: boolean;
   token: string | null;
-  user: any | null;
+  user: {
+    userId: string;
+  } | null;
   loginMethod: string | null;
 }
 
@@ -14,7 +16,9 @@ export type AuthAction =
       payload: {
         loginMethod: string;
         token: string;
-        user: any;
+        user: {
+          userId: string;
+        };
       };
     }
   | { type: "LOGOUT" };

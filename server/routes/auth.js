@@ -12,9 +12,9 @@ const User = require("../models/User");
  */
 
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { userId, password } = req.body;
 
-  const user = await User.findOne({ email: email });
+  const user = await User.findOne({ userId });
 
   try {
     if (!user) {
@@ -31,7 +31,7 @@ router.post("/login", async (req, res) => {
         .json({ success: false, message: "Incorrect password" });
     }
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ Id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
@@ -51,33 +51,39 @@ router.post("/login", async (req, res) => {
 
 router.post("/signup", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { userId, password } = req.body;
 
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ userId });
 
     if (user) {
-      return res.status(400).json({ message: "User already exists" });
+      return res.status(400).json({
+        success: false,
+        errorCode: "USER_ALREADY_EXISTS",
+        errorMessage: "User with the provided userId already exists.",
+      });
     }
 
-    const salt = await bcrypt.genSalt(10);
+    const salt = await bcrypt.genSalt(12);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     user = new User({
-      email,
+      userId,
       password: hashedPassword,
     });
 
     await user.save();
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ Id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
     res.json({ success: true, token });
   } catch (err) {
-    res
-      .status(400)
-      .json({ success: false, message: "Failed to register user", error: err });
+    res.status(400).json({
+      success: false,
+      errorCode: "REGISTRATION_FAILED",
+      errorMessage: "Failed to register user. Please try again later.",
+    });
   }
 });
 

@@ -54,7 +54,7 @@ const Login: React.FC = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:5000/api/auth//login",
+        "http://localhost:5000/api/auth/login",
         user,
         config
       );
@@ -66,9 +66,10 @@ const Login: React.FC = () => {
           payload: {
             token: response.data.token,
             user: {
-              email: loginState.emailAddress,
+              userId: loginState.emailAddress,
               // 필요한 경우 다른 사용자 정보를 추가합니다.
             },
+            loginMethod: "local",
           },
         });
         alert("로그인 성공");

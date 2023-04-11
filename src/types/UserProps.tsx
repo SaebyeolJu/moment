@@ -1,7 +1,10 @@
 export interface UserProps {
-  id: string;
+  userId: string;
   username: string;
-  name: string;
-  email: string;
+  profileUrl: string;
   password: string;
+  bio: string;
+  followers: Array<string>;
+  following: Array<string>;
+  createdAt: Date;
 }
