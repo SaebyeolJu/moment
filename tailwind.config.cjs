@@ -3,8 +3,8 @@ module.exports = {
   content: [
     "./*.html",
     "./src/*.tsx",
-    "./src/pages/*.tsx",
-    "./src/components/*.tsx",
+    "./src/pages/**/*.tsx",
+    "./src/components/**/*.tsx",
     "./src/functions/*.tsx",
   ],
   theme: {
@@ -36,6 +36,7 @@ module.exports = {
       colors: {
         ivory: "#EAEDDF",
         "light-gray": "#E5E5E5",
+        "dark-gray": "#212121",
         gray: "#ACB3BF",
         black: "#1E1E1E",
         "light-yellow": "#FCD585",
@@ -48,6 +49,7 @@ module.exports = {
         "dark-purple": "#081A51",
         "light-white": "rgba(255,255,255,0.18)",
         "dark-indigo": "#050331",
+        "dark-blue": "#1a202c",
       },
     },
   },
