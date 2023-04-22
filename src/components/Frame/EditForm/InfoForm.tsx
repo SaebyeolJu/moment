@@ -4,17 +4,26 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { AiOutlineCheck } from "react-icons/ai";
-import { GrLocation } from "react-icons/gr";
+import { FaSearchLocation } from "react-icons/fa";
 import { RxCalendar } from "react-icons/rx";
 
 import { FrameInputProps } from "../../../types/FrameProps";
 
 const DateForm = ({ onSubmit, onPrevStep, onNextStep }: FrameInputProps) => {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(Date);
+  const [isDateEmpty, setIsDateEmpty] = useState(false);
+
   const [location, setLocation] = useState("");
+  const [isLocationEmpty, setIsLocationEmpty] = useState(false);
 
   const handleDateChange = (date: Date) => {
-    setDate(date);
+    const formattedDate = date.toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+
+    setDate(formattedDate);
   };
 
   const handlePlaceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,32 +34,26 @@ const DateForm = ({ onSubmit, onPrevStep, onNextStep }: FrameInputProps) => {
     e.preventDefault();
 
     if (!date) {
-      alert("날짜를 선택해주세요");
+      setIsDateEmpty(true);
       return;
     }
 
     if (!location) {
-      alert("장소를 입력해주세요");
+      setIsLocationEmpty(true);
       return;
     }
 
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
-    const formattedDate = `${year}.${month}.${day}`;
-
-    onSubmit({ date: formattedDate, location });
+    onSubmit({ date, location });
     onNextStep();
   };
 
   return (
     <form
-      className="h-screen flex flex-col justify-center items-center space-y-5"
+      className="flex flex-col justify-center items-center space-y-4"
       onSubmit={handleSubmit}
     >
       <h1 className="text-2xl font-bold">언제, 어디서 였나요?</h1>
-      <img src="../img/gif/sign.gif" alt="photo_gif" className="w-42" />
+      <img src="../img/gif/sign.gif" alt="photo_gif" className="w-36" />
       <div className="flex flex-col">
         <div className="flex items-center">
           <RxCalendar className="mr-1" />
@@ -59,36 +62,46 @@ const DateForm = ({ onSubmit, onPrevStep, onNextStep }: FrameInputProps) => {
 
         <DatePicker
           className="text-center border border-gray-300 dark:text-black rounded-lg p-2"
-          selected={date}
+          selected={new Date(date)}
           onChange={handleDateChange}
           dateFormat="yyyy년 MM월 dd일"
         />
+        {isDateEmpty && <p className="text-red-500">날짜를 선택해주세요</p>}
       </div>
 
-      <div className="flex flex-col space-y-2">
+      <div className="flex flex-col">
         <div className="flex items-center">
-          <GrLocation className="mr-1 dark:text-white" />
+          <FaSearchLocation className="mr-1 dark:text-white" />
           <p className="text-md text-gray-500">장소를 적어주세요</p>
         </div>
-        <input
-          type="text"
-          className="text-center border border-gray-300 dark:text-black rounded-lg p-2"
-          value={location}
-          onChange={handlePlaceChange}
-        />
+        <div className="relative">
+          <input
+            type="text"
+            className="text-center border border-gray-300 dark:text-black rounded-lg p-2"
+            value={location}
+            onChange={handlePlaceChange}
+          />
+          {location && (
+            <AiOutlineCheck className="absolute right-2 top-1/2 transform -translate-y-1/2 dark:text-black" />
+          )}
+        </div>
+
+        {isLocationEmpty && (
+          <p className="mt-1 text-red-500">장소를 입력해주세요</p>
+        )}
       </div>
 
-      <div className="flex space-x-5">
+      <div className="flex space-x-5 ">
         <button
           type="submit"
-          className="rounded-lg px-4 py-2 mt-6 bg-slate-300 text-slate-800 hover:bg-slate-400 transition-colors duration-150"
+          className="rounded-lg px-4 py-2 bg-slate-300 text-slate-800 hover:bg-slate-400 transition-colors duration-150"
           onClick={() => onPrevStep()}
         >
           이전
         </button>
         <button
           type="submit"
-          className="rounded-lg px-4 py-2 mt-6 bg-red-500 text-white hover:bg-red-600 transition-colors duration-150"
+          className="rounded-lg px-4 py-2 bg-red-500 text-white hover:bg-red-600 transition-colors duration-150"
         >
           다음
         </button>

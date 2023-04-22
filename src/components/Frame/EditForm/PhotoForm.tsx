@@ -14,6 +14,7 @@ const PhotoForm: React.FC<FrameInputProps> = ({
   onNextStep,
 }) => {
   const [uploadedPhotos, setUploadedPhotos] = useState<Array<{
+    file: File;
     name: string;
     preview: string;
   }> | null>(null);
@@ -21,6 +22,7 @@ const PhotoForm: React.FC<FrameInputProps> = ({
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const newPhotos = acceptedFiles.map((file) => ({
+      file,
       name: file.name,
       preview: URL.createObjectURL(file),
     }));
@@ -103,15 +105,21 @@ const PhotoForm: React.FC<FrameInputProps> = ({
       return;
     }
 
-    onSubmit({
-      imageUrl: uploadedPhotos?.map((photo) => photo.preview) || [],
+    const formData = new FormData();
+    uploadedPhotos.forEach((photo, index) => {
+      formData.append(`image-${index}`, photo.file);
     });
+
+    onSubmit({
+      photoUrls: formData,
+    });
+
     onNextStep();
   };
 
   return (
     <form
-      className="h-full flex flex-col justify-center text-center space-y-6"
+      className="h-full flex flex-col justify-center text-center"
       onSubmit={handleSubmit}
     >
       <h2 className="text-2xl font-bold break-keep text-center">
@@ -121,13 +129,13 @@ const PhotoForm: React.FC<FrameInputProps> = ({
         {!uploadedPhotos && (
           <div
             {...getRootProps()}
-            className="flex flex-col justify-center items-center border-2 border-dashed border-gray-400 rounded-lg p-6 h-auto"
+            className="flex flex-col justify-center items-center border-2 border-dashed border-gray-400 rounded-lg m-6 p-5 pb-10 h-auto"
           >
             <input {...getInputProps({ hidden: true })} />
             <Player
               src="https://assets5.lottiefiles.com/packages/lf20_NxAJBy.json"
               background="transparent"
-              style={{ height: "300px", width: "300px" }}
+              style={{ height: "220px", width: "220px" }}
               autoplay={true}
               loop={true}
             ></Player>
@@ -143,7 +151,10 @@ const PhotoForm: React.FC<FrameInputProps> = ({
         {uploadedPhotos && (
           <>
             {uploadedPhotos.map((file, index) => (
-              <div key={file.name} className="flex items-center space-x-4 mt-2">
+              <div
+                key={file.name}
+                className="flex items-center space-x-4 mt-4 mb-4"
+              >
                 <div className="flex flex-col items-center w-1 text-yellow-400 text-md">
                   {index === 0 && <FaStar />}
                 </div>
@@ -168,7 +179,7 @@ const PhotoForm: React.FC<FrameInputProps> = ({
                   <button
                     onClick={() => moveDown(index)}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                    disabled={index === 0}
+                    disabled={index === uploadedPhotos.length - 1}
                   >
                     <VscTriangleDown />
                   </button>
@@ -187,7 +198,7 @@ const PhotoForm: React.FC<FrameInputProps> = ({
         <div className={"flex justify-center space-x-8"}>
           <button
             type="submit"
-            className={`rounded-lg px-4 py-2 mt-6 ${
+            className={`rounded-lg px-4 py-2 ${
               uploadedPhotos
                 ? "bg-slate-300 text-slate-800 hover:bg-slate-400"
                 : "bg-red-500 text-white hover:bg-red-600"
@@ -199,7 +210,7 @@ const PhotoForm: React.FC<FrameInputProps> = ({
           {uploadedPhotos && (
             <button
               type="submit"
-              className="rounded-lg px-4 py-2 mt-6 bg-red-500 text-white hover:bg-red-600 transition-colors duration-150"
+              className="rounded-lg px-4 py-2 bg-red-500 text-white hover:bg-red-600 transition-colors duration-150"
             >
               다음
             </button>

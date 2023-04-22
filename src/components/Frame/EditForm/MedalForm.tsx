@@ -146,18 +146,21 @@ const ImageEditor: React.FC<FrameInputProps> = ({
     }
 
     const canvas = canvasRef.current;
-    const dataUrl = canvas.toDataURL("image/png");
-    const editedImage = dataUrl.replace(/^data:image\/(png|jpg);base64,/, "");
-
-    onSubmit({ medalUrl: editedImage });
-    onNextStep();
+    canvas.toBlob((blob) => {
+      if (blob) {
+        onSubmit({ medalUrl: blob });
+        onNextStep();
+      } else {
+        alert("이미지 변환에 실패했습니다.");
+      }
+    }, "image/png"); // "image/png"는 원하는 이미지 형식을 설정할 수 있습니다.
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
     <form
-      className="h-full flex flex-col justify-center text-center space-y-6"
+      className="h-full flex flex-col justify-center text-center space-y-4"
       onSubmit={handleSubmit}
     >
       <h2 className="text-2xl font-bold text-gray-700 break-keep">
@@ -172,7 +175,7 @@ const ImageEditor: React.FC<FrameInputProps> = ({
         {...getRootProps()}
         className={`${
           image ? "hidden" : "block"
-        } flex flex-col justify-center items-center border-2 border-dashed border-gray-400 rounded-lg p-6 h-auto`}
+        } flex flex-col justify-center items-center border-2 border-dashed border-gray-400 rounded-lg p-5 m-6 h-auto`}
       >
         <input {...getInputProps()} />
         {isDragActive ? (
@@ -180,9 +183,10 @@ const ImageEditor: React.FC<FrameInputProps> = ({
             <Player
               src="https://assets5.lottiefiles.com/packages/lf20_NxAJBy.json"
               background="transparent"
-              style={{ height: "300px", width: "300px" }}
+              style={{ height: "200px", width: "200px" }}
               autoplay={true}
               loop={true}
+              className=""
             ></Player>
             <p className="text-gray-600">이미지를 드래그 해주세요.</p>
           </>
@@ -191,7 +195,7 @@ const ImageEditor: React.FC<FrameInputProps> = ({
             <Player
               src="https://assets7.lottiefiles.com/packages/lf20_SC3bWlmCAz.json"
               background="transparent"
-              style={{ height: "300px", width: "300px" }}
+              style={{ height: "200px", width: "200px" }}
               autoplay={true}
               loop={true}
             ></Player>
@@ -254,7 +258,7 @@ const ImageEditor: React.FC<FrameInputProps> = ({
             image
               ? " bg-slate-300 text-slate-800 hover:bg-slate-400"
               : "bg-red-500 text-white hover:bg-red-600"
-          } rounded-lg px-4 py-2 mt-6 transition-colors duration-150`}
+          } rounded-lg px-4 py-2 transition-colors duration-150`}
           onClick={() => onPrevStep()}
         >
           이전
@@ -262,7 +266,7 @@ const ImageEditor: React.FC<FrameInputProps> = ({
         {image && (
           <button
             type="submit"
-            className="rounded-lg px-4 py-2 mt-6 bg-red-500 text-white hover:bg-red-600 transition-colors duration-150"
+            className="rounded-lg px-4 py-2 bg-red-500 text-white hover:bg-red-600 transition-colors duration-150"
           >
             다음
           </button>

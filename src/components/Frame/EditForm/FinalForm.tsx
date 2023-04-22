@@ -61,9 +61,7 @@ const FinalForm = ({ frameInfo, onPrevStep }: FinalFormProps) => {
     try {
       const formData = new FormData();
 
-      if (frameInfo.frame.medalUrl) {
-        formData.append("medalUrl", frameInfo.frame.medalUrl);
-      }
+      formData.append("medalUrl", frameInfo.frame.medalUrl);
 
       if (
         frameInfo.frame.photoUrls &&
