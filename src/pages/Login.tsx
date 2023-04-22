@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -45,6 +45,7 @@ const Login: React.FC = () => {
       const user = {
         email: loginState.emailAddress,
         password: loginState.password,
+        username : loginState.emailAddress
       };
 
       const config = {
@@ -66,8 +67,8 @@ const Login: React.FC = () => {
           payload: {
             token: response.data.token,
             user: {
-              userId: loginState.emailAddress,
-              // 필요한 경우 다른 사용자 정보를 추가합니다.
+              userId: response.data.userId,
+              username: response.data.username,
             },
             loginMethod: "local",
           },

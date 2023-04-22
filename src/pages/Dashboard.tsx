@@ -1,22 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
+
+import { Outlet } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
-import FrameList from "../containers/FrameList";
-import BtnAddFrame from "../components/BtnAddFrame";
-import BtnPagination from "../components/BtnPagination";
-// import FrameCollection from "../containers/FrameCollection";
 
-const Collection = () => {
+import { AuthContext } from "../context/AuthContext";
+
+const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
+  const { state: authState, dispatch } = useContext(AuthContext);
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:5000/auth/login/success",
+          {
+            withCredentials: true,
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Credentials": "true",
+            },
+          }
+        );
+        if (res.status === 200) {
+          const resLoginObject = res.data;
+          if (resLoginObject.success) {
+            dispatch({
+              type: "LOGIN",
+              payload: {
+                loginMethod: "google",
+                token: resLoginObject.token,
+                user: {
+                  userId: resLoginObject.user.userId,
+                  username: resLoginObject.user.username,
+                },
+              },
+            });
+          }
+        } else {
+          throw new Error("authentication has been failed!");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUser();
+  }, []);
 
   function handleIsOpen() {
     setIsOpen(!isOpen);
   }
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
 
   return (
     <div className="flex w-full min-h-screen overflow-scroll">
@@ -24,22 +60,13 @@ const Collection = () => {
       {/* 배경화면 수정해야함 메인 */}
 
       <main
-        className={`flex flex-col justify-center text-center items-center dark:bg-slate-900 p-7 md:pl-20 pb-24 md:pb-0 transition-all duration-700 place-items-center justify-items-center align-middle ${
-          isOpen ? `-[calc(100%-4rem)]` : `md:w-[calc(100% - 4rem)]`
-        }`}
+        className={`flex flex-col justify-center text-center items-center dark:bg-slate-900 dark:text-white md:pb-0 pb-20 transition-all duration-700 place-items-center justify-items-center align-middle
+        `}
       >
-        <div className="flex fixed w-full top-0 dark:text-white right-1/2 transform -translate-x-1/2">
-          {/* 글자 안보이는거 해결해야함 */}
-          {/* <p className="fixed block w-full dark:text-white inset-y-[10%] bottom-0 md:left-1/2 left-1/2 right-1/2 text-2xl md:text-3xl"> */}
-          <p className="md:text-7xl text-xl">열정의 순간들을 간직하세요</p>
-        </div>
-        {/* <BtnPagination btnType="prev" onPageChange={handlePageChange} /> */}
-        {/* <BtnPagination btnType="next" onPageChange={handlePageChange} /> */}
-        <FrameList />
-        {/* <BtnAddFrame /> */}
+        <Outlet />
       </main>
     </div>
   );
 };
 
-export default Collection;
+export default Dashboard;

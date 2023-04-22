@@ -90,6 +90,7 @@ const SignUp = () => {
             token: response.data.token,
             user: {
               userId: signUpState.emailAddress,
+              username: signUpState.emailAddress,
               // 필요한 경우 다른 사용자 정보를 추가합니다.
             },
             loginMethod: "local",

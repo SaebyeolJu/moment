@@ -1,11 +1,12 @@
 // src/context/AuthContext.ts
-import { createContext, useReducer, Dispatch } from "react";
+import { createContext, Dispatch } from "react";
 
 interface AuthState {
   isLoggedIn: boolean;
   token: string | null;
   user: {
     userId: string;
+    username: string;
   } | null;
   loginMethod: string | null;
 }
@@ -18,6 +19,7 @@ export type AuthAction =
         token: string;
         user: {
           userId: string;
+          username: string;
         };
       };
     }
@@ -53,7 +55,10 @@ export const authReducer = (state: AuthState, action: AuthAction) => {
         ...state,
         isLoggedIn: true,
         token: action.payload.token,
-        user: action.payload.user,
+        user: {
+          userId: action.payload.user.userId,
+          username: action.payload.user.username,
+        },
         loginMethod: action.payload.loginMethod,
       };
     case "LOGOUT":
@@ -65,8 +70,5 @@ export const authReducer = (state: AuthState, action: AuthAction) => {
         user: null,
         loginMethod: null,
       };
-
-    default:
-      return state;
   }
 };
