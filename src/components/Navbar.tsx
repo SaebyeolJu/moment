@@ -23,17 +23,17 @@ const Navbar: React.FC<Props> = ({ isOpen, handleIsOpen }) => {
   const Menus = [
     {
       title: "Home",
-      dest: "/collection",
+      dest: "/dashboard",
       icon: <AiOutlineHome className="absolute w-7 h-7 min-w-min mx-6" />,
     },
     {
       title: "Profile",
-      dest: "/profile",
+      dest: "/dashboard/profile",
       icon: <CgProfile className="absolute w-7 h-7 min-w-min mx-6" />,
     },
     {
       title: "Friend",
-      dest: "/friends",
+      dest: "/dashboard/friends",
       icon: <FaUserFriends className="absolute w-7 h-7 min-w-min mx-6" />,
     },
     {
@@ -44,7 +44,7 @@ const Navbar: React.FC<Props> = ({ isOpen, handleIsOpen }) => {
     },
     {
       title: "Setting ",
-      dest: "/setting",
+      dest: "/dashboard/setting",
       icon: <AiOutlineSetting className="absolute w-7 h-7 min-w-min mx-6" />,
     },
   ];
@@ -73,7 +73,7 @@ const Navbar: React.FC<Props> = ({ isOpen, handleIsOpen }) => {
             className="w-full cursor-pointer hover:bg-yellow-500 hover:grayscale-0 grayscale"
             onClick={() => navigate(menu.dest)}
           >
-            <a className="flex md:justify-start justify-center items-center h-20">
+            <a className="flex md:justify-start justify-center items-center h-16">
               {menu.icon}
               <span className="md:ml-24 hidden md:group-hover:block">
                 {menu.title}
