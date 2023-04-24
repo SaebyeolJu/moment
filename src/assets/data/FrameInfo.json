@@ -1,132 +1,137 @@
 [
   {
-    "id": "1",
-    "name": "frame_1",
-    "title": "2022 런온 서울 10K",
-    "medal_img": "./img/temp/m2.png",
-    "cover_img": "./img/temp/cover.png",
-    "event_date": "2022.01.12",
-    "event_disc": "2022년 1월 1일 서울 종로구 종로 1가 1-1",
-    "frame_img": "./img/frames/frame_1.svg",
-    "likes": "1",
-    "comments": "3",
-    "tags": "['런온서울10K', '10K', '서울']"
+    "_id": "23lhelkjfsd",
+    "userId": "1",
+    "username": "frame_1",
+    "title": "2023 벤츠 기브앤레이스",
+    "medalUrl": "./img/temp/m2.png",
+    "imageUrl": "./img/temp/cover.png",
+    "location": "광안리 해수욕장",
+    "caption": "벤츠 마라톤",
+    "date": "2023-04-02T13:00:00",
+    "frameType": "1",
+    "likes": {
+      "totalLikes": 4,
+      "userLikes": ["user123", "user4356", "user456", "user789"]
+    },
+    "comments": [
+      {
+        "username": "user456",
+        "text": "이번 대회에서 저도 뛰게 되어서 너무 기뻤어요!",
+        "createdAt": "2022-01-02T10:00:00"
+      },
+      {
+        "username": "user789",
+        "text": "다음에도 이런 대회 많이 열어주세요!",
+        "createdAt": "2022-01-03T12:00:00"
+      }
+    ],
+
+    "tags": ["런온서울10K", "10K", "서울"]
   },
   {
-    "id": "2",
-    "name": "frame_2",
-    "title": "아디다스 마라톤",
-    "medal_img": "./img/temp/m2.png",
-    "cover_img": "./img/temp/cover.png",
-    "event_disc": "서울 종로구 종로 1가 1-1",
-    "event_date": "2022.01.12",
-    "frame_img": "./img/frames/frame_2.svg",
-    "likes": "1",
-    "comments": "3",
-    "tags": "['런온서울10K', '10K', '서울']"
+    "_id": "23lhelkfsdfjfsd",
+    "userId": "2",
+    "username": "frame_2",
+    "title": "NB Elite Race 20K",
+    "medalUrl": "./img/temp/m2.png",
+    "imageUrl": "./img/temp/cover.png",
+    "date": "2023-04-02T13:00:00",
+    "caption": "이 대회는 ㅇㅇ등을 했고 어쩌구",
+    "location": "마사경정공원",
+    "frameType": "3",
+    "likes": {
+      "totalLikes": 3,
+      "userLikes": ["user123", "user456", "user789"]
+    },
+    "comments": [
+      {
+        "username": "user123",
+        "text": "와 정말 멋진 대회였어요!",
+        "createdAt": "2022-01-01T14:00:00"
+      },
+      {
+        "username": "user456",
+        "text": "이번 대회에서 저도 뛰게 되어서 너무 기뻤어요!",
+        "createdAt": "2022-01-02T10:00:00"
+      },
+      {
+        "username": "user789",
+        "text": "다음에도 이런 대회 많이 열어주세요!",
+        "createdAt": "2022-01-03T12:00:00"
+      }
+    ],
+
+    "tags": ["런온서울10K", "10K", "서울"]
   },
   {
-    "id": "3",
-    "name": "frame_2",
-    "title": "벤츠 마라톤",
-    "medal_img": "./img/temp/m3.png",
-    "cover_img": "./img/temp/cover.png",
-    "event_disc": "서울 종로구 종로 1가 1-1",
-    "event_date": "2022.01.12",
-    "frame_img": "./img/frames/frame_3.svg",
-    "likes": "1",
-    "comments": "3",
-    "tags": "['런온서울10K', '10K', '서울']"
+    "_id": "23lhelwrkjfsd",
+    "userId": "2",
+    "username": "frame_2",
+    "title": "23 JTBC 서울 마라톤",
+    "medalUrl": "./img/temp/m3.png",
+    "imageUrl": "./img/temp/cover.png",
+    "date": "2022-01-01T13:00:00",
+    "caption": "이 대회는 ㅇㅇ등을 했고 어쩌구",
+    "location": "서울 종로구 종로 1",
+    "frameType": "2",
+    "likes": {
+      "totalLikes": 4,
+      "userLikes": ["user123", "user4356", "user456", "user789"]
+    },
+    "comments": [
+      {
+        "username": "user123",
+        "text": "와 정말 멋진 대회였어요!",
+        "createdAt": "2022-01-01T14:00:00"
+      },
+      {
+        "username": "user456",
+        "text": "이번 대회에서 저도 뛰게 되어서 너무 기뻤어요!",
+        "createdAt": "2022-01-02T10:00:00"
+      },
+      {
+        "username": "user789",
+        "text": "다음에도 이런 대회 많이 열어주세요!",
+        "createdAt": "2022-01-03T12:00:00"
+      }
+    ],
+
+    "tags": ["런온서울10K", "10K", "서울"]
   },
   {
-    "id": "4",
-    "name": "frame_2",
-    "title": "마라톤",
-    "medal_img": "./img/temp/medal.png",
-    "cover_img": "./img/temp/cover.png",
-    "event_disc": "서울 종로구 종로 1가 1-1",
-    "event_date": "2022.01.12",
-    "frame_img": "./img/frames/frame_2.svg",
-    "likes": "1",
-    "comments": "3",
-    "tags": "['런온서울10K', '10K', '서울']"
-  },
-  {
-    "id": "5",
-    "name": "frame_2",
-    "title": "마라톤",
-    "medal_img": "./img/temp/medal.png",
-    "cover_img": "./img/temp/cover.png",
-    "event_disc": "서울 종로구 종로 1가 1-1",
-    "event_date": "2022년 1월 1일",
-    "frame_img": "./img/frames/frame_3.svg",
-    "likes": "1",
-    "comments": "3",
-    "tags": "['런온서울10K', '10K', '서울']"
-  },
-  {
-    "id": "6",
-    "name": "frame_2",
-    "title": "마라톤",
-    "medal_img": "./img/temp/medal.png",
-    "cover_img": "./img/temp/cover.png",
-    "event_disc": "서울 종로구 종로 1가 1-1",
-    "event_date": "2022.01.12",
-    "frame_img": "./img/frames/frame_1.svg",
-    "likes": "1",
-    "comments": "3",
-    "tags": "['런온서울10K', '10K', '서울']"
-  },
-  {
-    "id": "7",
-    "name": "frame_2",
-    "title": "마라톤",
-    "medal_img": "./img/temp/medal.png",
-    "cover_img": "./img/temp/cover.png",
-    "event_disc": "서울 종로구 종로 1가 1-1",
-    "event_date": "2022.01.12",
-    "frame_img": "./img/frames/frame_2.svg",
-    "likes": "1",
-    "comments": "3",
-    "tags": "['런온서울10K', '10K', '서울']"
-  },
-  {
-    "id": "8",
-    "name": "frame_2",
-    "title": "아디다스 마라톤",
-    "medal_img": "./img/temp/medal.png",
-    "cover_img": "./img/temp/cover.png",
-    "event_disc": "서울 종로구 종로 1가 1-1",
-    "event_date": "2022년 1월 1일",
-    "frame_img": "./img/frames/frame_3.svg",
-    "likes": "1",
-    "comments": "3",
-    "tags": "['런온서울10K', '10K', '서울']"
-  },
-  {
-    "id": "9",
-    "name": "frame_2",
-    "title": "마라톤",
-    "medal_img": "./img/temp/medal.png",
-    "cover_img": "./img/temp/cover.png",
-    "event_disc": "서울 종로구 종로 1가 1-1",
-    "event_date": "2022년 1월 1일",
-    "frame_img": "./img/frames/frame_2.svg",
-    "likes": "1",
-    "comments": "3",
-    "tags": "['런온서울10K', '10K', '서울']"
-  },
-  {
-    "id": "10",
-    "name": "frame_2",
-    "title": "마라톤",
-    "medal_img": "./img/temp/medal.png",
-    "cover_img": "./img/temp/cover.png",
-    "event_disc": "서울 종로구 종로 1가 1-1",
-    "event_date": "2022년 1월 1일",
-    "frame_img": "./img/frames/frame_2.svg",
-    "likes": "1",
-    "comments": "3",
-    "tags": "['런온서울10K', '10K', '서울']"
+    "_id": "23lsdhelkjfsd",
+    "userId": "4",
+    "username": "frame_2",
+    "title": "춘천 마라톤",
+    "medalUrl": "./img/temp/medal.png",
+    "imageUrl": "./img/temp/cover.png",
+    "date": "2023-01-01T13:00:00",
+    "caption": "이 대회는 ㅇㅇ등을 했고 어쩌구",
+    "location": "서울 종로구 종로 1",
+    "frameType": "1",
+    "likes": {
+      "totalLikes": 4,
+      "userLikes": ["user123", "user4356", "user456", "user789"]
+    },
+    "comments": [
+      {
+        "username": "user123",
+        "text": "와 정말 멋진 대회였어요!",
+        "createdAt": "2022-01-01T14:00:00"
+      },
+      {
+        "username": "user456",
+        "text": "이번 대회에서 저도 뛰게 되어서 너무 기뻤어요!",
+        "createdAt": "2022-01-02T10:00:00"
+      },
+      {
+        "username": "user789",
+        "text": "다음에도 이런 대회 많이 열어주세요!",
+        "createdAt": "2022-01-03T12:00:00"
+      }
+    ],
+
+    "tags": ["런온서울10K", "10K", "서울"]
   }
 ]

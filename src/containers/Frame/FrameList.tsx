@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import FrameInfo from "../../assets/data/FrameInfo.json";
+import { useState } from "react";
+
 import Frame from "../../components/Frame/Frame";
 
-// 사용자가 선택한 frame 종류에 따라서 svg 파일을 다르게 가져온다.
+import { useFrameContext } from "../../context/FrameContext";
 
 const FrameList = () => {
-  const frames = FrameInfo;
+  const { frames } = useFrameContext();
+
   const [currentPage, setCurrentPage] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
 
@@ -14,9 +15,16 @@ const FrameList = () => {
   };
 
   return (
-    <section className="flex flex-wrap items-center h-full w-full snap-mandatory snap-x">
+    <section className="flex flex-wrap items-center justify-center h-full w-full snap-mandatory snap-x">
       {frames.map((frame, index) => {
-        return <Frame isClicked={false} frame={frame} key={index} />;
+        return (
+          <Frame
+            isClicked={false}
+            isActivated={true}
+            frame={frame}
+            key={index}
+          />
+        );
       })}
     </section>
   );

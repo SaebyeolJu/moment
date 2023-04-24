@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
@@ -11,9 +12,14 @@ import { BsFillTrashFill } from "react-icons/bs";
 interface FrameIconBoxProps {
   isClicked: boolean;
   onDelete: () => void;
+  _id: string;
 }
 
-const FrameIconBox: React.FC<FrameIconBoxProps> = ({ isClicked, onDelete }) => {
+const FrameIconBox: React.FC<FrameIconBoxProps> = ({
+  isClicked,
+  _id,
+  onDelete,
+}) => {
   const handleMagnifyingClick = () => {
     console.log("Magnifying glass clicked");
   };
@@ -26,9 +32,42 @@ const FrameIconBox: React.FC<FrameIconBoxProps> = ({ isClicked, onDelete }) => {
     console.log("Comment clicked");
   };
 
-  const handleDeleteClick = () => {
-    console.log("Trash clicked");
+  const handleDeleteClick = async (frameId: string) => {
+    try {
+      console.log(frameId);
+      const res = await axios.delete(
+        `http://localhost:5000/api/frames/${frameId}`
+      );
+      const deletedFrameId = frameId;
+      console.log(`Frame with id ${deletedFrameId} is deleted`);
+      onDelete();
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const Btns = [
+    {
+      icon: <RxMagnifyingGlass />,
+      onClick: handleMagnifyingClick,
+      tooltip: "View",
+    },
+    {
+      icon: <AiFillEdit />,
+      onClick: handleEditClick,
+      tooltip: "Edit",
+    },
+    {
+      icon: <AiOutlineComment />,
+      onClick: handleCommentClick,
+      tooltip: "Comment",
+    },
+    {
+      icon: <BsFillTrashFill />,
+      onClick: () => handleDeleteClick(_id), // Update this line
+      tooltip: "Delete",
+    },
+  ];
 
   return (
     <div
@@ -36,42 +75,20 @@ const FrameIconBox: React.FC<FrameIconBoxProps> = ({ isClicked, onDelete }) => {
     ${isClicked ? "opacity-100" : "opacity-0"}
       }`}
     >
-      <button
-        className="flex justify-center align-middle hover:scale-110 bg-amber-400 p-2 rounded-full text-white transition-all cursor-pointer"
-        onClick={handleMagnifyingClick}
-        data-tooltip-content="View"
-        data-tooltip-id="frame-tooltip"
-        data-tooltip-place="bottom"
-      >
-        <RxMagnifyingGlass />
-      </button>
-      <button
-        className="flex justify-center align-middle hover:scale-110 bg-yellow-600 p-2 rounded-full text-white transition-all cursor-pointer"
-        onClick={handleEditClick}
-        data-tooltip-content="Edit"
-        data-tooltip-id="frame-tooltip"
-        data-tooltip-place="bottom"
-      >
-        <AiFillEdit />
-      </button>
-      <button
-        className="flex justify-center align-middle hover:scale-110 bg-amber-400 p-2 rounded-full text-white transition-all cursor-pointer"
-        onClick={handleCommentClick}
-        data-tooltip-content="Comment"
-        data-tooltip-id="frame-tooltip"
-        data-tooltip-place="bottom"
-      >
-        <AiOutlineComment />
-      </button>
-      <button
-        className="flex justify-center align-middle hover:scale-110 bg-yellow-600 p-2 rounded-full text-white transition-all cursor-pointer"
-        onClick={onDelete}
-        data-tooltip-content="Delete"
-        data-tooltip-id="frame-tooltip"
-        data-tooltip-place="bottom"
-      >
-        <BsFillTrashFill />
-      </button>
+      {Btns.map((btn, index) => (
+        <button
+          key={index}
+          className={`${
+            index % 2 ? "bg-yellow-600" : "bg-amber-400"
+          } flex justify-center align-middle hover:scale-110 p-2 rounded-full text-white transition-all cursor-pointer`}
+          onClick={btn.onClick}
+          data-tooltip-content={btn.tooltip}
+          data-tooltip-id="frame-tooltip"
+          data-tooltip-place="bottom"
+        >
+          {btn.icon}
+        </button>
+      ))}
       <Tooltip id="frame-tooltip" />
     </div>
   );
