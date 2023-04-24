@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+const User = require("../models/User");
 const Frame = require("../models/Frame");
 
 const { uploadToGCS, upload } = require("../config/storage");
@@ -10,6 +11,7 @@ const { uploadToGCS, upload } = require("../config/storage");
 
 router.get("/", async (req, res) => {
   try {
+    const user = await User.findById();
     const frames = await Frame.find({});
     res.json(frames);
   } catch (error) {
@@ -59,7 +61,7 @@ router.post(
 
       const medalUrl = medal ? await uploadToGCS(medal) : undefined;
       const photoUrls =
-        photos.length > 0
+        photos && photos.length > 0
           ? await Promise.all(photos.map((photo) => uploadToGCS(photo)))
           : [];
 
@@ -90,8 +92,8 @@ router.post(
 
 // frame 삭제 API endpoint
 // DELETE /api/frames/:frameId
-router.delete("/:frameId", async (req, res) => {
-  const frameId = req.params.frameId;
+router.delete("/:id", async (req, res) => {
+  const frameId = req.params.id;
   try {
     const deletedFrame = await Frame.findByIdAndDelete(frameId);
     if (!deletedFrame) {
