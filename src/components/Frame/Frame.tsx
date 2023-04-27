@@ -11,7 +11,9 @@ const Frame: React.FC<FrameProps> = ({ frame, isActivated }) => {
   const [isDeleted, setIsDeleted] = useState(false);
 
   const handleClick = () => {
+    // if (isActivated) {
     setIsClicked(!isClicked);
+    // }
   };
 
   const handleMouseEnter = () => {
@@ -38,8 +40,8 @@ const Frame: React.FC<FrameProps> = ({ frame, isActivated }) => {
   return (
     <article
       className={`group flex flex-col items-center snap-center duration-300 ease-out ${
-        isDeleted ? "opacity-0 scale-0" : "opacity-100 scale-100"
-      }`}
+        isHovered ? "relative z-20" : "z-0"
+      } ${isDeleted ? "opacity-0 scale-0" : "opacity-100 scale-100"}`}
     >
       {isActivated && (
         <FrameTooltip
@@ -55,9 +57,9 @@ const Frame: React.FC<FrameProps> = ({ frame, isActivated }) => {
       ${isClicked ? "drop-shadow-xl" : "drop-shadow-2xl"}
       `}
         style={{
-          backgroundImage: `url(./img/frames/frame_${
-            Number(frame.frameType) + 1
-          }.svg)`,
+          backgroundImage: `url(./img/frames/frame_${Number(
+            frame.frameType
+          )}.svg)`,
         }}
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
@@ -72,40 +74,33 @@ const Frame: React.FC<FrameProps> = ({ frame, isActivated }) => {
                 className={`frame-medal w-full m-2 mb-6 drop-shadow-xl transition-all duration-1000`}
               />
             )}
-            <h1
-              className={`frame--title text-sm md:text-md font-semibold text-gray-600 break-keep
-              ${isClicked ? "hidden" : "visible"}`}
-            >
-              {frame.title}
-            </h1>
 
             <div
-              className={`frame--txt break-keep border bg-slate-50 border-neutral-400/[.25] mb-2 p-4 drop-shadow-sm ${
-                isClicked ? "visible" : "hidden"
-              }`}
+              className={`frame--txt break-keep border bg-slate-50 border-neutral-400/[.25] mb-2 p-4 drop-shadow-sm`}
             >
               <h1
-                className={`frame--title text-md md:text-md font-semibold text-gray-600`}
+                className={`frame--title text-sm font-semibold text-gray-600`}
               >
                 {frame.title}
               </h1>
             </div>
-
-            <svg
-              className={`chevron ${
-                !isClicked ? "rotate-180" : ""
-              } transition-all duration-700 m-2 mt-5`}
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 100 35"
-              width="30"
-            >
-              <path
-                d="M5 30L50 5l45 25"
-                fill="none"
-                stroke="#000"
-                strokeWidth="6"
-              />
-            </svg>
+            {isActivated && (
+              <svg
+                className={`chevron ${
+                  !isClicked ? "rotate-180" : ""
+                } transition-all duration-700 m-2 mt-5`}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 100 35"
+                width="30"
+              >
+                <path
+                  d="M5 30L50 5l45 25"
+                  fill="none"
+                  stroke="#000"
+                  strokeWidth="6"
+                />
+              </svg>
+            )}
           </div>
         </div>
       </div>

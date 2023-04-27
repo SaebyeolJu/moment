@@ -4,6 +4,10 @@ import Frame from "../../components/Frame/Frame";
 
 import { useFrameContext } from "../../context/FrameContext";
 
+/**
+ *
+ * @returns
+ */
 const FrameList = () => {
   const { frames } = useFrameContext();
 

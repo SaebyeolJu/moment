@@ -12,7 +12,7 @@ const Landing = () => {
     const options = {
       root: null,
       rootMargin: "0px",
-      threshold: 0.3,
+      threshold: 0.4,
     };
 
     const sectionObserver = new IntersectionObserver((entries) => {
@@ -64,7 +64,7 @@ const Landing = () => {
         className="snap-start border-[12px] border-white rounded-3xl flex flex-col xl:flex-row xl:justify-center justify-evenly items-center w-full h-full animate-gradient gradient-animation text-white"
         id="section_1"
       >
-        <header className="flex flex-col text-center xl:text-left text-box xl:pl-14 textWatch">
+        <header className="flex flex-col text-center xl:text-left text-box xl:pl-14 textWatch transition-all">
           <h1 className="md:text-7xl text-5xl font-bold">MOMENTS</h1>
           <h3>내 열정의 순간들을 소중히 보관하세요</h3>
           <p>러닝 이벤트 기록 서비스 Moment</p>
@@ -126,12 +126,13 @@ const Landing = () => {
         className="snap-start flex flex-col border-[12px] border-white rounded-3xl justify-center items-center text-center w-full h-full animate-gradient gradient-animation p-10"
         id="section_3"
       >
-        <div className="text-white textWatch">
-          <h1 className="block text-xl md:text-3xl">
-            러닝 이벤트를 갤러리 형식으로 보관하세요.
+        <div className="text-white">
+          <h1 className="block text-xl md:text-3xl break-keep">
+            러닝 이벤트를 갤러리 형식으로.
           </h1>
-          <p>메달, 러닝 기록, 러닝 사진 등을 한눈에 볼 수 있습니다.</p>
-          <p>러닝 이벤트를 기록하고, 기록을 공유하세요.</p>
+          <p className="text-sm break-keep">
+            메달, 러닝 기록, 러닝 사진 등을 한눈에 볼 수 있습니다.
+          </p>
         </div>
 
         <LandingFrame />
@@ -140,7 +141,7 @@ const Landing = () => {
         className="snap-start border-[12px] border-white bg-cover bg-no-repeat bg-center rounded-3xl flex flex-col justify-center items-center text-center w-full h-full"
         id="section_4"
       >
-        <h1 className="text-3xl md:text-4xl block textWatch">
+        <h1 className="text-3xl md:text-4xl block textWatch transition-all">
           친구와 소중한 순간을 나눠보세요
         </h1>
         <div className="bg-amber-300 w-1/2 h-1/3 rounded-full"></div>
@@ -150,10 +151,10 @@ const Landing = () => {
         style={{ backgroundImage: "url('/img/bg/finishing.png')" }}
         id="section_5"
       >
-        <h1 className="text-white text-3xl md:text-4xl block textWatch">
+        <h1 className="text-white text-3xl md:text-4xl block textWatch transition-all">
           당신의 여정을 응원합니다.
         </h1>
-        <button className="text-white font-medium  m-2 p-2 border-2 rounded-md block mt-4 textWatch">
+        <button className="text-white font-medium  m-2 p-2 border-2 rounded-md block mt-4 textWatch transition-all">
           시작하기
         </button>
       </section>
