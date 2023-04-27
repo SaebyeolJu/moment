@@ -11,9 +11,9 @@ const Frame: React.FC<FrameProps> = ({ frame, isActivated }) => {
   const [isDeleted, setIsDeleted] = useState(false);
 
   const handleClick = () => {
-    // if (isActivated) {
-    setIsClicked(!isClicked);
-    // }
+    if (isActivated) {
+      setIsClicked(!isClicked);
+    }
   };
 
   const handleMouseEnter = () => {
@@ -40,8 +40,8 @@ const Frame: React.FC<FrameProps> = ({ frame, isActivated }) => {
   return (
     <article
       className={`group flex flex-col items-center snap-center duration-300 ease-out ${
-        isHovered ? "relative z-20" : "z-0"
-      } ${isDeleted ? "opacity-0 scale-0" : "opacity-100 scale-100"}`}
+        isDeleted ? "opacity-0 scale-0" : "opacity-100 scale-100"
+      }`}
     >
       {isActivated && (
         <FrameTooltip

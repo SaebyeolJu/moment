@@ -28,7 +28,7 @@ const LandingFrame = () => {
       {frameArray.map((frame, index) => (
         <div
           key={frame.key}
-          className={`absolute md:static md:group-hover:rotate-0 md:group-hover:-translate-x-0 textWatch transition-all ${frame.className}`}
+          className={`hover:z-20 absolute md:static md:group-hover:rotate-0 md:group-hover:-translate-x-0 textWatch transition-all ${frame.className}`}
         >
           <Frame frame={frames[index]} isActivated={false} />
         </div>
