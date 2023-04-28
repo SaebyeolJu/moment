@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 
-import PhotoForm from "../components/Frame/EditForm/PhotoForm";
-import MedalForm from "../components/Frame/EditForm/MedalForm";
-import TitleForm from "../components/Frame/EditForm/TitleForm";
-import InfoForm from "../components/Frame/EditForm/InfoForm";
-import FrameForm from "../components/Frame/EditForm/FrameForm";
-import FinalForm from "../components/Frame/EditForm/FinalForm";
+import PhotoForm from "../containers/Frame/EditForm/PhotoForm";
+import MedalForm from "../containers/Frame/EditForm/MedalForm";
+import TitleForm from "../containers/Frame/EditForm/TitleForm";
+import InfoForm from "../containers/Frame/EditForm/InfoForm";
+import FrameForm from "../containers/Frame/EditForm/FrameForm";
+import FinalForm from "../containers/Frame/EditForm/FinalForm";
 
 import FrameTypeBtn from "../components/Frame/FrameTypeBtn";
 
